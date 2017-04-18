@@ -33,6 +33,14 @@ var MemoryGame = function() {
     this.correctPairs = 0;
 };
 
+MemoryGame.prototype._shuffleCard = function() {
+
+  this.cards.sort(function(a, b){
+      return 0.5 - Math.random();
+    });
+
+};
+
 //******************************************************************
 // HTML/CSS Interactions
 //******************************************************************
@@ -42,6 +50,7 @@ var memoryGame;
 $(document).ready(function(){
   memoryGame = new MemoryGame();
   var html = '';
+  memoryGame._shuffleCard();
 
   memoryGame.cards.forEach(function(pic, index) {
     var sanitizedName = pic.name.split(' ').join('_');
@@ -60,11 +69,18 @@ $(document).ready(function(){
   console.log(html);
   // Add all the divs to the HTML
   document.getElementById('memory_board').innerHTML = html;
+
+
 });
 
 
 
 
+//MemoryGame.prototype._shuffleCard = function() {};
+
+//MemoryGame.prototype.selectCard = function(card) {};
+
+//MemoryGame.prototype.finished = function() {};
 
 
 
@@ -156,12 +172,7 @@ var arrayCartas=[acuamanCard,batmanCard,captainAmericaCard,
     ironmanCard,spidermanCard,supermanCard,theAavengersCard,thorCard];
 
 
-//MemoryGame.prototype._shuffleCard = function() {};
-
-//MemoryGame.prototype.selectCard = function(card) {};
-
-//MemoryGame.prototype.finished = function() {};
-
+/
 
 });
 */
