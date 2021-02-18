@@ -76,15 +76,15 @@ $(document).ready(function(){
 
 
 
-//MemoryGame.prototype._shuffleCard = function() {};
+MemoryGame.prototype._shuffleCard = function() {};
 
-//MemoryGame.prototype.selectCard = function(card) {};
+MemoryGame.prototype.selectCard = function(card) {};
 
-//MemoryGame.prototype.finished = function() {};
+MemoryGame.prototype.finished = function() {};
 
 
 
-/*    Mi original intento
+//    Mi original intento
 $(document).ready(function(){
 
 console.log("enganchado");
@@ -172,7 +172,4 @@ var arrayCartas=[acuamanCard,batmanCard,captainAmericaCard,
     ironmanCard,spidermanCard,supermanCard,theAavengersCard,thorCard];
 
 
-/
-
 });
-*/
