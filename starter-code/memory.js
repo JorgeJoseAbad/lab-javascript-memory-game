@@ -31,6 +31,7 @@ var MemoryGame = function() {
     this.selectedCards = [];
     this.pairsClicked = 0;
     this.correctPairs = 0;
+    this.globalScore = 0;
 
     this._shuffleCard = function() {
       for (let i = this.cards.length - 1; i > 0; i--) {
@@ -48,7 +49,7 @@ MemoryGame.prototype.selectCard = function(card) {
   var isEmpty = this.selectedCards.length == 0;
 
   this.selectedCards.push(card.split('/')[1]);
-  //console.log(this.selectedCards)
+
   if (!isEmpty){
     if (this.selectedCards[longitud-1] === this.selectedCards[longitud]
         || this.selectedCards[longitud-2] === this.selectedCards[longitud-1]){
@@ -66,8 +67,10 @@ MemoryGame.prototype.selectCard = function(card) {
 };
 
 MemoryGame.prototype.finished = function() {
-  var globalScore = this.correctPairs / this.pairsClicked;
-  if (typeof(globalScore)=='number') $('#global_score').html(globalScore);
+  this.globalScore = this.correctPairs / this.pairsClicked;
+  if (this.correctPairs == 12) return true;
+  else return false;
+
 };
 
 
@@ -85,7 +88,6 @@ $(document).ready(function(){
 
   console.log(memoryGame.cards);
   memoryGame._shuffleCard();
-
 
   memoryGame.cards.forEach(function(pic, index) {
     var sanitizedName = pic.name.split(' ').join('_');
@@ -107,7 +109,6 @@ $(document).ready(function(){
 
   startGame();
 
-
   $('.card').on('click', function(){
 
       var elemento = this;
@@ -124,8 +125,7 @@ $(document).ready(function(){
    function updateCount(){
      $('#pairs_guessed').html(memoryGame.correctPairs);
      $('#pairs_clicked').html(memoryGame.pairsClicked);
-     if (memoryGame.correctPairs == 12) memoryGame.finished();
-
+     if (memoryGame.finished()) $('#global_score').html(memoryGame.globalScore);
    }
 
    function startGame(){
