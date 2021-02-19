@@ -125,7 +125,7 @@ $(document).ready(function(){
    function updateCount(){
      $('#pairs_guessed').html(memoryGame.correctPairs);
      $('#pairs_clicked').html(memoryGame.pairsClicked);
-     if (memoryGame.finished()) $('#global_score').html(memoryGame.globalScore);
+     if (memoryGame.finished()) $('#global_score').html(memoryGame.globalScore.toFixed(3));
    }
 
    function startGame(){
