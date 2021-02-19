@@ -45,26 +45,30 @@ MemoryGame.prototype.selectCard = function(card) {
   console.log("carta recibida!",card);
 
   var longitud = this.selectedCards.length;
-  this.selectedCards.push(card.split('/')[1])
+  var isEmpty = this.selectedCards.length == 0;
+
+  this.selectedCards.push(card.split('/')[1]);
   //console.log(this.selectedCards)
-  if (longitud>0){
+  if (!isEmpty){
     if (this.selectedCards[longitud-1] === this.selectedCards[longitud]
         || this.selectedCards[longitud-2] === this.selectedCards[longitud-1]){
-      //console.log("exito!");
-      if (this.selectedCards[longitud]===this.selectedCards[longitud-1]){
-        this.correctPairs++;
-      }
-      return true;
-    } else if (longitud>0) {
-      //console.log("fracaso");
+        if (this.selectedCards[longitud]===this.selectedCards[longitud-1]){
+          this.correctPairs++;
+        }
+        return true;
+    } else if (!isEmpty) {
       this.selectedCards.pop();
       return false;
     }
+
   } else return true;
 
 };
 
-MemoryGame.prototype.finished = function() {};
+MemoryGame.prototype.finished = function() {
+  var globalScore = this.correctPairs / this.pairsClicked;
+  if (typeof(globalScore)=='number') $('#global_score').html(globalScore);
+};
 
 
 
@@ -101,32 +105,30 @@ $(document).ready(function(){
   // Add all the divs to the HTML
   document.getElementById('memory_board').innerHTML = html;
 
-  arranca();
-
+  startGame();
 
 
   $('.card').on('click', function(){
 
-    var elemento = this;
-    //console.log(elemento);
-    var cartaVuelta = elemento.getElementsByClassName('front')[0];
-    cartaVuelta.classList.add("fliped");
-    var nombreCarta = elemento.getElementsByClassName('back')[0].getAttribute("name");
-    //console.log(nombreCarta);
-    if (!memoryGame.selectCard(nombreCarta)){
-      cartaVuelta.classList.remove("fliped");
-    } else updateCount()
-
-
+      var elemento = this;
+      var cartaVuelta = elemento.getElementsByClassName('front')[0];
+      cartaVuelta.classList.add("fliped");
+      var nombreCarta = elemento.getElementsByClassName('back')[0].getAttribute("name");
+      if (!memoryGame.selectCard(nombreCarta)){
+        memoryGame.pairsClicked++;
+        cartaVuelta.classList.remove("fliped");
+      } else updateCount()
 
    });
 
    function updateCount(){
-
      $('#pairs_guessed').html(memoryGame.correctPairs);
+     $('#pairs_clicked').html(memoryGame.pairsClicked);
+     if (memoryGame.correctPairs == 12) memoryGame.finished();
+
    }
 
-   function arranca(){
+   function startGame(){
      var listaCartasPuestas;
      listaCartasPuestas = document.getElementsByClassName('front');
 
@@ -139,7 +141,7 @@ $(document).ready(function(){
            item.classList.remove('fliped');
        }
      }, 2000);
-     
+
    }
 
 
