@@ -33,7 +33,6 @@ var MemoryGame = function() {
     this.correctPairs = 0;
 
     this._shuffleCard = function() {
-
       for (let i = this.cards.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
@@ -42,10 +41,28 @@ var MemoryGame = function() {
       }
 };
 
+MemoryGame.prototype.selectCard = function(card) {
+  console.log("carta recibida!",card);
 
-//MemoryGame.prototype._shuffleCard = function() {};
+  var longitud = this.selectedCards.length;
+  this.selectedCards.push(card.split('/')[1])
+  //console.log(this.selectedCards)
+  if (longitud>0){
+    if (this.selectedCards[longitud-1] === this.selectedCards[longitud]
+        || this.selectedCards[longitud-2] === this.selectedCards[longitud-1]){
+      //console.log("exito!");
+      if (this.selectedCards[longitud]===this.selectedCards[longitud-1]){
+        this.correctPairs++;
+      }
+      return true;
+    } else if (longitud>0) {
+      //console.log("fracaso");
+      this.selectedCards.pop();
+      return false;
+    }
+  } else return true;
 
-MemoryGame.prototype.selectCard = function(card) {};
+};
 
 MemoryGame.prototype.finished = function() {};
 
@@ -84,110 +101,46 @@ $(document).ready(function(){
   // Add all the divs to the HTML
   document.getElementById('memory_board').innerHTML = html;
 
+  arranca();
+
+
 
   $('.card').on('click', function(){
 
     var elemento = this;
-    console.log(elemento);
-    var idBuscada = elemento.getElementsByClassName('front')[0];
-    idBuscada.classList.add("fliped");
-    console.log(idBuscada);
+    //console.log(elemento);
+    var cartaVuelta = elemento.getElementsByClassName('front')[0];
+    cartaVuelta.classList.add("fliped");
+    var nombreCarta = elemento.getElementsByClassName('back')[0].getAttribute("name");
+    //console.log(nombreCarta);
+    if (!memoryGame.selectCard(nombreCarta)){
+      cartaVuelta.classList.remove("fliped");
+    } else updateCount()
+
 
 
    });
 
+   function updateCount(){
 
-});
+     $('#pairs_guessed').html(memoryGame.correctPairs);
+   }
 
+   function arranca(){
+     var listaCartasPuestas;
+     listaCartasPuestas = document.getElementsByClassName('front');
 
+     for (var i = 0; i < listaCartasPuestas.length; i++) {
+       listaCartasPuestas[i].classList.add('fliped');
+     }
 
-
-//    Mi original intento esto de abajo creo que no servirá
-$(document).ready(function(){
-
-console.log("enganchado");
-
-
-var a = 0;
-
-console.log(a);
-
-
-var acuamanCard ={
-    number: 1,
-    name: 'acuaman',
-    image: './img/acuaman.jpg',
-};
-
-var batmanCard = {
-  number: 2,
-  name: 'batman',
-  image: './img/batman.jpg',
-};
-
-var captainAmericaCard = {
-  number: 3,
-  name: 'captain-america',
-  image: './img/captain-america.jpg',
-};
-
-var fantasticFourCard ={
-  number:4,
-  name: 'fantastic-four',
-  image: './img/fantastic-four.jpg',
-};
-
-var flashCard ={
-  number:5,
-  name: 'flash',
-  image: './img/flash.jpg'
-};
-
-var greenArrowCard ={
-  number:6,
-  name: 'green-arrow',
-  image: './img/green-arrow.jpg'
-};
-
-var greenLanternCard={
-  number:7,
-  name: 'green-lantern',
-  image: './img/green-lantern.jpg'
-};
-
-var ironmanCard ={
-  number:8,
-  name: 'ironman',
-  image: './img/ironman.jpg'
-};
-
-var spidermanCard ={
-  number:9,
-  name: 'spiderman',
-  image: './img/spiderman.jpg'
-};
-
-var supermanCard ={
-  number:10,
-  name: 'superman',
-  image: './img/superman.jpg'
-};
-
-var theAvengersCard ={
-  number:11,
-  name: 'the-avengers',
-  image: './img/the-avengers.jpg'
-};
-
-var thorCard ={
-  number:12,
-  name: 'thor',
-  image: 'thor.jpg'
-};
-
-//var arrayCartas=[acuamanCard,batmanCard,captainAmericaCard,
-//    fantasticFourCard,flashCard,greenArrowCard,greenLanternCard,
-//    ironmanCard,spidermanCard,supermanCard,theAavengersCard,thorCard];
+     setTimeout(function () {
+       for (let item of listaCartasPuestas) {
+           item.classList.remove('fliped');
+       }
+     }, 2000);
+     
+   }
 
 
 });
