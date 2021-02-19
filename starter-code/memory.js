@@ -31,15 +31,26 @@ var MemoryGame = function() {
     this.selectedCards = [];
     this.pairsClicked = 0;
     this.correctPairs = 0;
+
+    this._shuffleCard = function() {
+
+      for (let i = this.cards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
+      console.log(this.cards);
+      }
 };
 
-MemoryGame.prototype._shuffleCard = function() {
 
-  this.cards.sort(function(a, b){
-      return 0.5 - Math.random();
-    });
+//MemoryGame.prototype._shuffleCard = function() {};
 
-};
+MemoryGame.prototype.selectCard = function(card) {};
+
+MemoryGame.prototype.finished = function() {};
+
+
+
 
 //******************************************************************
 // HTML/CSS Interactions
@@ -50,7 +61,10 @@ var memoryGame;
 $(document).ready(function(){
   memoryGame = new MemoryGame();
   var html = '';
+
+  console.log(memoryGame.cards);
   memoryGame._shuffleCard();
+
 
   memoryGame.cards.forEach(function(pic, index) {
     var sanitizedName = pic.name.split(' ').join('_');
@@ -66,9 +80,22 @@ $(document).ready(function(){
     html += '</div>';
     html += '</div>';
   });
-  console.log(html);
+  //console.log(html);
   // Add all the divs to the HTML
   document.getElementById('memory_board').innerHTML = html;
+  //document.getElementsByTagName('table')[0].innerHTML = html;
+
+  $('.back').on('click', function(){
+
+    var elemento = this;
+    console.log(elemento);
+    console.log(elemento.id);
+    var idBuscada = elemento.id;
+    console.log(document.getElementById(idBuscada));
+    document.getElementById(idBuscada).classList.add("mystyle");
+
+
+   });
 
 
 });
@@ -76,15 +103,7 @@ $(document).ready(function(){
 
 
 
-MemoryGame.prototype._shuffleCard = function() {};
-
-MemoryGame.prototype.selectCard = function(card) {};
-
-MemoryGame.prototype.finished = function() {};
-
-
-
-//    Mi original intento
+//    Mi original intento esto de abajo creo que no servirá
 $(document).ready(function(){
 
 console.log("enganchado");
@@ -167,9 +186,9 @@ var thorCard ={
   image: 'thor.jpg'
 };
 
-var arrayCartas=[acuamanCard,batmanCard,captainAmericaCard,
-    fantasticFourCard,flashCard,greenAarrowCard,greenLanternCard,
-    ironmanCard,spidermanCard,supermanCard,theAavengersCard,thorCard];
+//var arrayCartas=[acuamanCard,batmanCard,captainAmericaCard,
+//    fantasticFourCard,flashCard,greenArrowCard,greenLanternCard,
+//    ironmanCard,spidermanCard,supermanCard,theAavengersCard,thorCard];
 
 
 });

@@ -6,8 +6,7 @@ html {
 
 
 body{
-
-
+color: inherit;
 }
 
 #playground{
@@ -43,22 +42,47 @@ table{
 	font-size:64px;
 }
 
+/* nuevo*/
 
+.card{
+  position: relative;
+  float: left;
+  width:71px;
+  height:71px;
+  float:left;
+  margin:10px;
+  padding:20px;
+}
 
+.card .front {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width:71px;
+  height:71px;
 
-
-
-.card .back {
-  background-color: #456783;
-	width:71px;
-	height:71px;
-	float:left;
 	margin:10px;
 	padding:20px;
 	font-size:64px;
 }
-.card .front.blocked,
-.card .back.blocked {
+/*nuevo */
+
+.card .back {
+  position:absolute;
+  background-color: #456783;
+	width:71px;
+	height:71px;
+  top: -10px;
+  left: -10px;
+
+	margin:10px;
+	padding:20px;
+	font-size:64px;
+}
+
+
+.card .front .blocked,
+.card .back .blocked {
   pointer-events: none;
 }
 
