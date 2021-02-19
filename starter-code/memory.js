@@ -80,19 +80,18 @@ $(document).ready(function(){
     html += '</div>';
     html += '</div>';
   });
-  //console.log(html);
+
   // Add all the divs to the HTML
   document.getElementById('memory_board').innerHTML = html;
-  //document.getElementsByTagName('table')[0].innerHTML = html;
 
-  $('.back').on('click', function(){
+
+  $('.card').on('click', function(){
 
     var elemento = this;
     console.log(elemento);
-    console.log(elemento.id);
-    var idBuscada = elemento.id;
-    console.log(document.getElementById(idBuscada));
-    document.getElementById(idBuscada).classList.add("mystyle");
+    var idBuscada = elemento.getElementsByClassName('front')[0];
+    idBuscada.classList.add("fliped");
+    console.log(idBuscada);
 
 
    });
