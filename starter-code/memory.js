@@ -67,7 +67,7 @@ MemoryGame.prototype.selectCard = function(card) {
 };
 
 MemoryGame.prototype.finished = function() {
-  this.globalScore = this.correctPairs / this.pairsClicked;
+  this.globalScore = 100*(this.correctPairs / this.pairsClicked);
   if (this.correctPairs == 12) return true;
   else return false;
 
@@ -109,6 +109,8 @@ $(document).ready(function(){
 
   startGame();
 
+
+
   $('.card').on('click', function(){
 
       var elemento = this;
@@ -125,7 +127,7 @@ $(document).ready(function(){
    function updateCount(){
      $('#pairs_guessed').html(memoryGame.correctPairs);
      $('#pairs_clicked').html(memoryGame.pairsClicked);
-     if (memoryGame.finished()) $('#global_score').html(memoryGame.globalScore.toFixed(3));
+     if (memoryGame.finished()) $('#global_score').html(memoryGame.globalScore.toFixed(1));
    }
 
    function startGame(){
@@ -139,8 +141,18 @@ $(document).ready(function(){
      setTimeout(function () {
        for (let item of listaCartasPuestas) {
            item.classList.remove('fliped');
+
        }
      }, 2000);
+
+     setTimeout(function(){
+        var prueba = '¿Has visto las parejas de superhéroes '+
+                    'y memorizado su posición?.'+
+                    '\nAhora se trata de señalar dónde están.'+
+                    '\nCliquea para encontrar las parejas.'+
+                    '\nPuntuación de 100 a 0';
+        alert(prueba);
+     },2100);
 
    }
 
